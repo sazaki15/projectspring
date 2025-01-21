@@ -10,6 +10,6 @@ public interface PatientService {
     ReponsePatientDto getPatients();
     ReponsePatientDto getPatientById(Long id);
     ReponsePatientDto addPatient(PatientDto patient);
-    ReponsePatientDto updatePatient(PatientDto patient);
+    ReponsePatientDto updatePatient(PatientDto patient, Long id);
     ReponsePatientDto deletePatient(Long id);
 }

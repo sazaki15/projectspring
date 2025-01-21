@@ -49,12 +49,43 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
-    public ReponsePatientDto updatePatient(PatientDto patient) {
-        return null;
+    public ReponsePatientDto updatePatient(PatientDto patient,Long id) {
+        Patient patientrepo = patientRepositories.findById(id).orElseThrow(() -> new NotFoundException("Patient not found"));
+        if (patient.getNom() != null) {
+            patientrepo.setNom(patient.getNom());
+        }
+        if (patient.getId() != null) {
+            patientrepo.setId(patient.getId());
+        }
+        if (patient.getGenre() != null) {
+            patientrepo.setGenre(patient.getGenre());
+        }
+        if (patient.getEmail() != null) {
+            patientrepo.setEmail(patient.getEmail());
+        }
+        if (patient.getPrenom() != null) {
+            patientrepo.setPrenom(patient.getPrenom());
+        }
+        if (patient.getTelephone() != null) {
+            patientrepo.setTelephone(patient.getTelephone());
+        }
+        if (patient.getDateNaissance() != null) {
+            patientrepo.setDateNaissance(patient.getDateNaissance());
+        }
+        patientRepositories.save(patientrepo);
+        return ReponsePatientDto.builder()
+                .message("Patient updated successfully")
+                .patient(modelMapper.map(patientrepo, PatientDto.class))
+                .build();
+
     }
 
     @Override
     public ReponsePatientDto deletePatient(Long id) {
-        return null;
+        patientRepositories.findById(id).orElseThrow(() -> new NotFoundException("Patient not found"));
+        patientRepositories.deleteById(id);
+        return ReponsePatientDto.builder()
+                .message("Patient deleted successfully")
+                .build();
     }
 }
